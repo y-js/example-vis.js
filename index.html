@@ -1,0 +1,30 @@
+<html>
+
+<body>
+
+    <script src="http://mari0.github.io/example-yjs-requirejs-vis/bower_components/requirejs/require.js"></script>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="http://mari0.github.io/example-yjs-requirejs-vis/bower_components/vis/dist/vis.css" rel="stylesheet" type="text/css" />
+    <script src="http://mari0.github.io/example-yjs-requirejs-vis/config.js"></script>
+    <script src="http://mari0.github.io/example-yjs-requirejs-vis/app.js"></script>
+
+    <div id="network-popUp">
+        <span id="operation">node</span>
+        <br>
+        <table style="margin:auto;">
+            <tr>
+                <td>label</td>
+                <td>
+                    <input id="node-label" value="new value" />
+                </td>
+            </tr>
+        </table>
+        <input type="button" value="save" id="saveButton" />
+        <input type="button" value="cancel" id="cancelButton" />
+    </div>
+    <br />
+    <div id="mynetwork"></div>
+</body>
+
+</html>

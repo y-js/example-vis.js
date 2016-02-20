@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!-- generated on Tue Jan 26 2016 16:45:36 -->
+<Module>
+    <ModulePrefs
+            title="Vis Graph editor"
+            description=""
+            width="800"
+            height="600">
+
+        <Require feature="opensocial-0.8" ></Require>
+        <Require feature="openapp" ></Require>
+        <Require feature="dynamic-height"></Require>
+
+        <OAuth>
+            <Service name="openapp" xmlns:openapp="http://www.role-project.eu/xml/openapp/opensocialext/"
+                     openapp:service="http://purl.org/role/terms/spaceService"
+                     openapp:permitReadAppend="http://purl.org/role/terms/data">
+                <Request method="" url=""></Request>
+                <Authorization url=""></Authorization>
+                <Access method="" url=""></Access>
+            </Service>
+        </OAuth>
+
+    </ModulePrefs>
+    <Content type="html">
+        <![CDATA[
+<html>
+
+<body>
+    <script src="http://mari0.github.io/example-yjs-requirejs-vis/bower_components/requirejs/require.js"></script>
+    <link href="http://mari0.github.io/example-yjs-requirejs-vis/style.css" rel="stylesheet" type="text/css" />
+    <link href="http://mari0.github.io/example-yjs-requirejs-vis/bower_components/vis/dist/vis.css" rel="stylesheet" type="text/css" />
+    <script src="http://mari0.github.io/example-yjs-requirejs-vis/config.js"></script>
+    <script src="http://mari0.github.io/example-yjs-requirejs-vis/app.js"></script>
+
+    <div id="network-popUp">
+        <span id="operation">node</span>
+        <br>
+        <table style="margin:auto;">
+            <tr>
+                <td>label</td>
+                <td>
+                    <input id="node-label" value="new value" />
+                </td>
+            </tr>
+        </table>
+        <input type="button" value="save" id="saveButton" />
+        <input type="button" value="cancel" id="cancelButton" />
+    </div>
+    <br />
+    <div id="mynetwork"></div>
+</body>
+
+</html>
+    ]]>
+    </Content>
+</Module>
