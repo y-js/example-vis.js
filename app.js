@@ -5,7 +5,7 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
         },
         connector: {
             name: 'websockets-client', // use the websockets connector
-            room: '12345'
+            room: '123456'
             // url: 'localhost:2345'
         },
         share: { // specify the shared content
