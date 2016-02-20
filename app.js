@@ -169,8 +169,8 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
                         if (r == true) {
                             y.share.edges.set(data.id, Y.Map).then(function (ymap) {
                                 ymap.set('data', data);
+                                callback(data);
                             });
-                            callback();
                         }
                     }
                     else {
