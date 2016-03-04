@@ -1,0 +1,23 @@
+{
+  "name": "yjs-requirejs-vis-example",
+  "version": "0.0.0",
+  "authors": [
+    "Mari0 <mario.rosenstengel@rwth-aachen.de>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "yjs": "0.8.9",
+    "y-memory": "~0.6.2",
+    "y-websockets-client": "~0.7.11",
+    "y-map": "~0.7.0",
+    "requirejs": "~2.1.22",
+    "vis": "~4.12.0"
+  }
+}

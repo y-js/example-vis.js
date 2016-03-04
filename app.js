@@ -5,42 +5,34 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
         },
         connector: {
             name: 'websockets-client', // use the websockets connector
-            room: '123456'
+            room: '12345'
             // url: 'localhost:2345'
         },
         share: { // specify the shared content
             nodes: 'Map',
-            edges: 'Map',
-            nodeList: 'Array',
-            edgeList: 'Array'
+            edges: 'Map'
         },
         sourceDir: 'http://mari0.github.io/example-yjs-requirejs-vis/bower_components'
     }).then(function (y) {
         console.log('Yjs is ready');
         window.y = y;
 
-        var nodes = y.share.nodeList.toArray();
-        for (var i = 0; i < nodes.length; i++) {
-            try {
-                y.share.nodes.get(nodes[i]).then(function (ymap) {
+
+        for(var nodeKey in y.share.nodes.opContents){
+            if(y.share.nodes.opContents.hasOwnProperty(nodeKey)){
+                y.share.nodes.get(nodeKey).then(function (ymap) {
                     registerNodeObserver(ymap);
                     graph.nodes.add({ id: ymap.get('id'), label: ymap.get('label'), x: ymap.get('x'), y: ymap.get('y') });
                 })
             }
-            catch (e) {
-                y.share.nodeList.delete(i);
-            }
         }
-        var edges = y.share.edgeList.toArray();
-        for (var i = 0; i < edges.length; i++) {
-            try {
-            y.share.edges.get(edges[i]).then(function (ymap) {
-                registerEdgeObserver(ymap);
-                graph.edges.add(ymap.get('data'));
-            })
-            }
-            catch(e){
-                y.share.edgeList.delete(i);
+
+        for(var edgeKey in y.share.edges.opContents){
+            if(y.share.edges.opContents.hasOwnProperty(edgeKey)){
+                y.share.edges.get(edgeKey).then(function (ymap) {
+                    registerNodeObserver(ymap);
+                    graph.edges.add(ymap.get('data'));
+                })
             }
         }
 
@@ -59,6 +51,7 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
                 }
             }
         });
+
         y.share.edges.observe(function (events) {
             for (var i in events) {
                 var event = events[i];
@@ -92,7 +85,7 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
                     }
                 }
             })
-        }
+        };
 
         var registerEdgeObserver = function (ymap) {
             ymap.observe(function (events) {
@@ -106,7 +99,7 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
                     }
                 }
             })
-        }
+        };
 
         draw();
 
@@ -158,19 +151,19 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
                 editEdge: function (data, callback) {
                     y.share.edges.get(data.id).then(function (ymap) {
                         ymap.set('data', data);
+                        callback(data);
                     });
-                    callback();
+
                 },
                 addEdge: function (data, callback) {
                     data.id = GUID();
-                    y.share.edgeList.push([data.id]);
                     if (data.from == data.to) {
                         var r = confirm("Do you want to connect the node to itself?");
                         if (r == true) {
                             y.share.edges.set(data.id, Y.Map).then(function (ymap) {
                                 ymap.set('data', data);
-                                callback(data);
                             });
+                            callback();
                         }
                     }
                     else {
@@ -191,6 +184,9 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
                     y.share.edges.delete(data.edges[0]);
                     callback();
                 }
+            },
+            physics:{
+                enabled:false
             }
         };
         network = new vis.Network(container, graph, options);
@@ -219,7 +215,6 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
     function saveData(data, callback) {
         data.label = document.getElementById('node-label').value;
         clearPopUp();
-        y.share.nodeList.push([data.id]);
         y.share.nodes.set(data.id, Y.Map).then(function (ymap) {
             ymap.set('id', data.id);
             ymap.set('label', data.label);
