@@ -30,7 +30,7 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
         for(var edgeKey in y.share.edges.opContents){
             if(y.share.edges.opContents.hasOwnProperty(edgeKey)){
                 y.share.edges.get(edgeKey).then(function (ymap) {
-                    registerNodeObserver(ymap);
+                    registerEdgeObserver(ymap);
                     graph.edges.add(ymap.get('data'));
                 })
             }
