@@ -13,11 +13,11 @@
     "tests"
   ],
   "dependencies": {
-    "yjs": "0.8.9",
-    "y-memory": "~0.6.2",
-    "y-websockets-client": "~0.7.11",
-    "y-map": "~0.7.0",
     "requirejs": "~2.1.22",
-    "vis": "~4.12.0"
+    "yjs": "^11.0.4",
+    "y-map": "^9.0.0",
+    "y-memory": "^8.0.4",
+    "y-websockets-client": "^8.0.8",
+    "vis": "^4.16.1"
   }
 }
