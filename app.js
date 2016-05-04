@@ -12,7 +12,7 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
             nodes: 'Map',
             edges: 'Map'
         },
-        sourceDir: 'http://mari0.github.io/example-yjs-requirejs-vis/bower_components'
+        sourceDir: 'http://y-js.org/example-vis.js//bower_components'
     }).then(function (y) {
         console.log('Yjs is ready');
         window.y = y;
