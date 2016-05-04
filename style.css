@@ -1,8 +1,9 @@
     #mynetwork {
       position:relative;
-      width: 800px;
-      height: 600px;
+      width: 80%;
+      height: 100%;
       border: 1px solid lightgray;
+	  margin:0 auto;
     }
     #operation {
       font-size:28px;
