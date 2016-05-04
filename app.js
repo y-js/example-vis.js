@@ -5,7 +5,7 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
         },
         connector: {
             name: 'websockets-client', // use the websockets connector
-            room: '123456'
+            room: '1234567'
             // url: 'localhost:2345'
         },
         share: { // specify the shared content
@@ -21,8 +21,15 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
         for(var nodeKey in y.share.nodes.opContents){
             if(y.share.nodes.opContents.hasOwnProperty(nodeKey)){
                 y.share.nodes.get(nodeKey).then(function (ymap) {
-                    registerNodeObserver(ymap);
-                    graph.nodes.add({ id: ymap.get('id'), label: ymap.get('label'), x: ymap.get('x'), y: ymap.get('y') });
+                    if(ymap.get('id')) {
+                        registerNodeObserver(ymap);
+                        graph.nodes.add({
+                            id: ymap.get('id'),
+                            label: ymap.get('label'),
+                            x: ymap.get('x'),
+                            y: ymap.get('y')
+                        });
+                    }
                 })
             }
         }
@@ -36,66 +43,59 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
             }
         }
 
-        y.share.nodes.observe(function (events) {
-            for (var i in events) {
-                var event = events[i];
-                var ymap = event.object;
-                if (event.type === 'delete') {
-                    graph.nodes.remove(event.name);
-                }
-                else if(event.type === 'add') {
-                    ymap.get(event.name).then(function (ynode) {
-                        graph.nodes.add({ id: event.name });
-                        registerNodeObserver(ynode);
-                    });
-                }
+        y.share.nodes.observe(function (event) {
+            var ymap = event.object;
+            if (event.type === 'delete') {
+                graph.nodes.remove(event.name);
+            }
+            else if(event.type === 'add') {
+                ymap.get(event.name).then(function (ynode) {
+                    graph.nodes.add({ id: event.name,
+                        label: ynode.get('label'),
+                        x: ynode.get('x'),
+                        y: ynode.get('y') });
+                    registerNodeObserver(ynode);
+                });
             }
         });
 
-        y.share.edges.observe(function (events) {
-            for (var i in events) {
-                var event = events[i];
-                var ymap = event.object;
-                if (event.type === 'delete') {
-                    graph.edges.remove(event.name);
-                } else if(event.type === 'add'){
-                    ymap.get(event.name).then(function (yedge) {
-                        registerEdgeObserver(yedge);
-                    });
-                }
+        y.share.edges.observe(function (event) {
+            var ymap = event.object;
+            if (event.type === 'delete') {
+                graph.edges.remove(event.name);
+            } else if(event.type === 'add'){
+                ymap.get(event.name).then(function (yedge) {
+                    if(yedge.get('data'))
+                        graph.edges.add(yedge.get('data'));
+                    registerEdgeObserver(yedge);
+                });
             }
         });
 
         var registerNodeObserver = function (ymap) {
-            ymap.observe(function (events) {
-                for (var i in events) {
-                    var event = events[i];
-                    switch (event.name) {
-                        case 'label': {
-                            graph.nodes.update({ id: event.object.get('id'), label: event.object.get('label') });
-                            break;
-                        }
-                        case 'x': {
-                            graph.nodes.update({ id: event.object.get('id'), x: event.object.get('x') });
-                            break;
-                        }
-                        case 'y': {
-                            graph.nodes.update({ id: event.object.get('id'), y: event.object.get('y') });
-                        }
+            ymap.observe(function (event) {
+                switch (event.name) {
+                    case 'label': {
+                        graph.nodes.update({ id: event.object.get('id'), label: event.object.get('label') });
+                        break;
+                    }
+                    case 'x': {
+                        graph.nodes.update({ id: event.object.get('id'), x: event.object.get('x') });
+                        break;
+                    }
+                    case 'y': {
+                        graph.nodes.update({ id: event.object.get('id'), y: event.object.get('y') });
                     }
                 }
             })
         };
 
         var registerEdgeObserver = function (ymap) {
-            ymap.observe(function (events) {
-                for (var i in events) {
-                    var event = events[i];
-                    switch (event.name) {
-                        case 'data': {
-                            graph.edges.update(event.object.get('data'));
-                            break;
-                        }
+            ymap.observe(function (event) {
+                switch (event.name) {
+                    case 'data': {
+                        graph.edges.update(event.object.get('data'));
+                        break;
                     }
                 }
             })
@@ -130,7 +130,12 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
         // create a network
         var container = document.getElementById('mynetwork');
         var options = {
+            height:'100%',
+            width:'100%',
+            autoResize:true,
+            //clickToUse:true,
             layout: { randomSeed: seed }, // just to make sure the layout is the same when the locale is changed
+            interaction:{navigationButtons:true},
             manipulation: {
                 addNode: function (data, callback) {
                     // filling in the popup DOM elements
@@ -174,7 +179,8 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
                     }
                 },
                 deleteNode: function (data, callback) {
-                    y.share.nodes.delete(data.nodes[0]);
+                    if(y.share.nodes.opContents.hasOwnProperty(data.nodes[0]))
+                        y.share.nodes.delete(data.nodes[0]);
                     for (var i = 0; i < data.edges; i++) {
                         y.share.edges.delete([data.edges[i]]);
                     }
