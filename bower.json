@@ -14,10 +14,10 @@
   ],
   "dependencies": {
     "requirejs": "~2.1.22",
-    "yjs": "^11.0.4",
-    "y-map": "^9.0.0",
-    "y-memory": "^8.0.4",
-    "y-websockets-client": "^8.0.8",
-    "vis": "^4.16.1"
+    "vis": "^4.16.1",
+    "y-websockets-client": "^8.0.10",
+    "yjs": "^12.0.0",
+    "y-map": "^10.0.1",
+    "y-memory": "^8.0.7"
   }
 }
