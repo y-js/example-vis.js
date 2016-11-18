@@ -147,11 +147,9 @@ requirejs(['vis', 'GUIDGenerator', 'yjs'], function (vis, GUID) {
                     document.getElementById('network-popUp').style.display = 'block';
                 },
                 editEdge: function (data, callback) {
-                    y.share.edges.get(data.id).then(function (ymap) {
-                        ymap.set('data', data);
-                        callback(data);
-                    });
-
+                    var ymap = y.share.edges.get(data.id);
+                    ymap.set('data', data);
+                    callback(data);
                 },
                 addEdge: function (data, callback) {
                     data.id = GUID();

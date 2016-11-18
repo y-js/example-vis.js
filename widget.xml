@@ -27,11 +27,11 @@
 <html>
 
 <body>
-    <script src="http://mari0.github.io/example-yjs-requirejs-vis/bower_components/requirejs/require.js"></script>
-    <link href="http://mari0.github.io/example-yjs-requirejs-vis/style.css" rel="stylesheet" type="text/css" />
-    <link href="http://mari0.github.io/example-yjs-requirejs-vis/bower_components/vis/dist/vis.css" rel="stylesheet" type="text/css" />
-    <script src="http://mari0.github.io/example-yjs-requirejs-vis/config.js"></script>
-    <script src="http://mari0.github.io/example-yjs-requirejs-vis/app.js"></script>
+    <script src="http://y-js.org/example-vis.js/bower_components/requirejs/require.js"></script>
+    <link href="http://y-js.org/example-vis.js/style.css" rel="stylesheet" type="text/css" />
+    <link href="http://y-js.org/example-vis.js/bower_components/vis/dist/vis.css" rel="stylesheet" type="text/css" />
+    <script src="http://y-js.org/example-vis.js/config.js"></script>
+    <script src="http://y-js.org/example-vis.js/app.js"></script>
 
     <div id="network-popUp">
         <span id="operation">node</span>
