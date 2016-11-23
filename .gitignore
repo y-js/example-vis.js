@@ -1,5 +1,6 @@
 .idea
 node_modules
+dist
 
 bower_components/requirejs/*
 !bower_components/requirejs/require.js

@@ -1,0 +1,14 @@
+{
+  "name": "cograph",
+  "main": "main.js",
+  "description":"Collaborative graph editing with yjs and visjs",
+  "author":"Mario",
+  "version":"1.0.0",
+  "devDependencies": {
+    "electron": "^1.4.7"
+  },
+  "build": {
+    "appId": "my.id",
+    "category": "my.category"
+  }
+}
